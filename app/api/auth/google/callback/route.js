@@ -39,15 +39,12 @@ export async function GET(request) {
 
     const tokenData = await tokenRes.json()
 
-    // Debug Google token exchange
-    console.log('Google token response:', {
-      status: tokenRes.status,
-      error: tokenData.error,
-      error_description: tokenData.error_description,
-    })
-
     if (!tokenData.access_token) {
-      console.error('Google token exchange failed:', tokenData)
+      console.error('Google token exchange failed:', {
+        status: tokenRes.status,
+        error: tokenData.error,
+        error_description: tokenData.error_description,
+      })
 
       return NextResponse.redirect(
         `${process.env.NEXTAUTH_URL}/login?error=token_failed`
